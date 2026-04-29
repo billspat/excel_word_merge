@@ -1,7 +1,7 @@
 {
-    "name": "excel-word-merge.app",
+    "name": "excel-word-smash",
     "version": "0.0.1",
-    "description": "smash/merge a word template and excel table",
+    "description": "smash/merge an MS-Word template and Excel table",
     "author": {
         "email": "mail@billspat.com",
         "name": "Pat Bills",
