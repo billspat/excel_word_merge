@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="vendor/css/tabler.min.css"/>
     <!-- DataTables Bootstrap 5 skin -->
     <link rel="stylesheet" href="vendor/css/dataTables.bootstrap5.min.css"/>
+    <style>
+      .app-button { min-width: 10rem; justify-content: center; }
+    </style>
   </head>
   <body class="antialiased">
     <div class="wrapper">
@@ -82,7 +85,7 @@
               <div class="card-body">
                 <div class="row g-3 align-items-center mb-3">
                   <div class="col-auto">
-                    <button id="selectTemplate" class="btn btn-outline-primary">
+                    <button id="selectTemplate" class="btn btn-outline-primary app-button">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
                       Select Template
                     </button>
@@ -93,7 +96,7 @@
                 </div>
                 <div class="row g-3 align-items-center mb-3">
                   <div class="col-auto">
-                    <button id="openExcel" class="btn btn-outline-success">
+                    <button id="openExcel" class="btn btn-outline-success app-button">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
                       Open Excel
                     </button>
@@ -105,13 +108,13 @@
                 <hr class="my-2">
                 <div class="row g-2">
                   <div class="col-auto">
-                    <button id="validate" class="btn btn-outline-warning">
+                    <button id="validate" class="btn btn-outline-warning app-button">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4"/><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg>
                       Validate
                     </button>
                   </div>
                   <div class="col-auto">
-                    <button id="merge" class="btn btn-primary">
+                    <button id="merge" class="btn btn-primary app-button">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 3h5v5"/><path d="M8 3h-5v5"/><path d="M21 3l-7.536 7.536a5 5 0 0 0 -1.464 3.534v5.93"/><path d="M3 3l7.536 7.536a5 5 0 0 1 1.464 3.534v1.93"/></svg>
                       Smash!
                     </button>

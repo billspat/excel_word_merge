@@ -12,6 +12,18 @@
         "start": "electron .",
         "build:mac": "electron-builder --mac"
     },
+    "build": {
+        "appId": "com.billspat.excelwordsmash",
+        "mac": {
+            "icon": "images/icons/macos/icon.icns"
+        },
+        "win": {
+            "icon": "images/icons/windows/icon.ico"
+        },
+        "linux": {
+            "icon": "images/icons/linux/icons"
+        }
+    },
     "dependencies": {
         "@tabler/core": "^1.4.0",
         "datatables.net": "^1.13.8",

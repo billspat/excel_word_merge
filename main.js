@@ -11,13 +11,26 @@ let rows = [];
 let excelBaseName = 'merged';
 
 function createWindow() {
+  // .icns is only for the packaged bundle — runtime APIs need a PNG or .ico
+  const iconPath = process.platform === 'win32'
+    ? path.join(__dirname, 'images/icons/windows/icon.ico')
+    : process.platform === 'darwin'
+    ? path.join(__dirname, 'images/icons/macos/512x512.png')
+    : path.join(__dirname, 'images/icons/linux/icons/512x512.png');
+
   win = new BrowserWindow({
     width: 1200,
     height: 800,
+    icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  if (process.platform === 'darwin' && app.dock) {
+    app.dock.setIcon(iconPath);
+  }
+
   win.loadFile('index.html');
 }
 
