@@ -112,7 +112,7 @@ ipcMain.handle('select-template', async () => {
   return filePaths && filePaths.length > 0 ? filePaths[0] : null;
 });
 
-ipcMain.handle('merge-docs', async (event, templatePath) => {
+ipcMain.handle('merge-docs', async (event, templatePath, fileGroupingCol) => {
   const { filePaths: folderPaths, canceled } = await dialog.showOpenDialog({
     title: 'Select output folder',
     properties: ['openDirectory', 'createDirectory']
@@ -122,15 +122,33 @@ ipcMain.handle('merge-docs', async (event, templatePath) => {
   const outDir = path.join(folderPaths[0], excelBaseName);
   fs.mkdirSync(outDir, { recursive: true });
 
+  const createdFolders = new Set();
+  let foldersCreated = 0;
+
   for (let i = 0; i < rows.length; i++) {
     const content = fs.readFileSync(templatePath, 'binary');
     const zip = new PizZip(content);
     const doc = new Docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
     doc.render(rows[i]);
     const fname = `${rows[i].Semester}_${rows[i].AssistantNetID} review.docx`;
-    fs.writeFileSync(path.join(outDir, fname), doc.getZip().generate({ type: 'nodebuffer' }));
+
+    let targetDir = outDir;
+    if (fileGroupingCol && rows[i][fileGroupingCol] != null) {
+      const groupValue = String(rows[i][fileGroupingCol]).replace(/[/\\?%*:|"<>]/g, '_').trim();
+      if (groupValue) {
+        targetDir = path.join(outDir, groupValue);
+        if (!createdFolders.has(targetDir)) {
+          const existed = fs.existsSync(targetDir);
+          fs.mkdirSync(targetDir, { recursive: true });
+          if (!existed) foldersCreated++;
+          createdFolders.add(targetDir);
+        }
+      }
+    }
+
+    fs.writeFileSync(path.join(targetDir, fname), doc.getZip().generate({ type: 'nodebuffer' }));
     win.webContents.send('progress', Math.round(((i + 1) / rows.length) * 100));
   }
   shell.openPath(outDir);
-  return { canceled: false, outDir };
+  return { canceled: false, outDir, foldersCreated };
 });

@@ -12,6 +12,17 @@ openExcel.onclick = async () => {
     data: res.rows,
     columns: res.headers.map(h => ({ title: h, data: h }))
   });
+
+  // Populate and reveal the File Grouping select
+  const sel = document.getElementById('fileGrouping');
+  sel.innerHTML = '<option value="">(none — all files in one folder)</option>';
+  res.headers.forEach(h => {
+    const opt = document.createElement('option');
+    opt.value = h;
+    opt.textContent = h;
+    sel.appendChild(opt);
+  });
+  document.getElementById('fileGroupingRow').classList.remove('d-none');
 };
 
 validate.onclick = async () => {
@@ -32,12 +43,17 @@ selectTemplate.onclick = async () => {
 merge.onclick = async () => {
   if (!tplPath) return showStatus('warning', 'Select a template first.');
   document.getElementById('progressCard').classList.remove('d-none');
-  const res = await window.api.mergeDocs(tplPath);
+  const groupingCol = document.getElementById('fileGrouping').value || null;
+  const res = await window.api.mergeDocs(tplPath, groupingCol);
   if (!res || res.canceled) {
     document.getElementById('progressCard').classList.add('d-none');
     return;
   }
-  showStatus('success', 'Merge complete! The output folder has been opened.');
+  let msg = 'Merge complete! The output folder has been opened.';
+  if (res.foldersCreated > 0) {
+    msg += ` ${res.foldersCreated} sub-folder${res.foldersCreated === 1 ? '' : 's'} created.`;
+  }
+  showStatus('success', msg);
 };
 
 window.api.onProgress(p => {
